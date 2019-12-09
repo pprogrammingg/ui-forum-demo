@@ -20,22 +20,18 @@ class App extends Component {
 	}
 
 	// Add forum post
-	addPost = (messageBody, userFirstName, userLastName) => {
+	addPost = (messageBody, userFirstName, userLastName, originalPostingId) => {
 		axios
 			.post("/postings", {
 				messageBody,
 				userFirstName,
-				userLastName
+				userLastName,
+				originalPostingId
 			})
 			.then(axios
 				.get(`/postings?userFirstName=${userFirstName}&userLastName=${userLastName}`)
 				.then((res) => this.setState({ posts : res.data }))
 			);
-	};
-
-	// Reply to Posting
-	reply = (id) => {
-		console.log(id);
 	};
 	
 	render() {
@@ -52,6 +48,7 @@ class App extends Component {
 									<AddPost addPost={this.addPost} />
 									<Posts
 										posts={this.state.posts}
+										addComment={this.addPost} 
 									/>
 								</React.Fragment>
 							)}
