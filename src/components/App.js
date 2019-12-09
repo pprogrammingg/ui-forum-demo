@@ -4,32 +4,44 @@ import Header from './layout/Header';
 import Posts from './Posts';
 import AddPost from './AddPost';
 import About from './pages/About';
-import uuid from 'uuid';
 import axios from 'axios';
 
 import './App.css';
 
 class App extends Component {
-  state = {
+	state = {
 		posts: []
 	};
 
-  // Add forum post
-	addPost = (messageBody) => {
+	componentDidMount() {
+		axios
+			.get('/postings')
+			.then((res) => this.setState({ posts : res.data }));
+	}
+
+	// Add forum post
+	addPost = (messageBody, userFirstName, userLastName) => {
 		axios
 			.post("/postings", {
-				messageBody
+				messageBody,
+				userFirstName,
+				userLastName
 			})
-			.then((res) => {
-				res.data.id = uuid.v4();
-				this.setState({ posts: [...this.state.posts, res.data] });
-      });
+			.then(axios
+				.get(`/postings?userFirstName=${userFirstName}&userLastName=${userLastName}`)
+				.then((res) => this.setState({ posts : res.data }))
+			);
 	};
-  
-  render() {
-    return (
-      <Router>
-        <div className='App'>
+
+	// Reply to Posting
+	reply = (id) => {
+		console.log(id);
+	};
+	
+	render() {
+		return (
+		<Router>
+			<div className='App'>
 					<div className='container'>
 						<Header />
 						<Route
@@ -44,12 +56,12 @@ class App extends Component {
 								</React.Fragment>
 							)}
 						/>
-            <Route path='/about' component={About} />
-					</div>
+						<Route path='/about' component={About} />
 				</div>
-      </Router>
-    );
-  }
+			</div>
+		</Router>
+		);
+	}
 }
 
 export default App;

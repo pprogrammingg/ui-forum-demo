@@ -6,7 +6,7 @@ class Posts extends Component {
   render() {
     return (
       this.props.posts.map((post) => (
-          <PostItem key={ post.id } post={ post } />
+          <PostItem key={ post.id } post={ post } reply={this.props.reply} />
       ))
     );
   }
@@ -14,7 +14,8 @@ class Posts extends Component {
 
 // PropTypes
 Posts.propTypes = {
-    posts : PropTypes.array.isRequired
+    posts : PropTypes.array.isRequired,
+    reply : PropTypes.func.isRequired
 }
 
 export default Posts;

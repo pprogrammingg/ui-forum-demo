@@ -7,15 +7,23 @@ export class PostItem extends Component {
         return {
             backgroundColor : '#f4f4f4',
             padding : '10px',
-            borderBottom : '1px #ccc dotted'
+            marginTop : '10px',
+            borderBottom : '1px red dotted',
+            display : 'flex'
         }
     }
     
     render() {
-        const { messageBody } = this.props.post;
+        const { messageBody, userFirstName, userLastName } = this.props.post;
         return (
             <div style={ this.getStyle() }>
-                <p> 
+                <pre style={{ flex : '1', padding : '5px' }}>
+                    from: { userFirstName } { userLastName } <br />
+                    Location: Toronto
+                </pre>
+                <p style={{ padding : '5px' }}>
+                </p>
+                <p style={{ flex : '10', padding : '5px' }}> 
                     { messageBody } 
                 </p>
             </div>
