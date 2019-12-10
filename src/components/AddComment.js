@@ -31,7 +31,7 @@ export class AddComment extends Component {
                 display : 'flex', 
                 flexDirection: 'column', 
                 justifyContent : 'flex-start',
-                width : '650px' }}>
+                width : '100%' }}>
                 <textarea
                     name="messageBody"
                     placeholder="Enter Post body"

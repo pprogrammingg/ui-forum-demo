@@ -68,7 +68,6 @@ export class PostItem extends Component {
         return {
             backgroundColor : '#494949',
             color : '#fff',
-            marginLeft : `calc(100% + 10px)`,
             width : '100%',
             border : 'solid #fff'
         }
@@ -90,17 +89,23 @@ export class PostItem extends Component {
                 { this.state.replyMode ? <AddComment originalPostingId={ id } addComment={ this.props.addComment } />  : null}
                 <button onClick={ this.toggleExpand } style={btnStyle}>{ this.state.expanded ? "collapse" : "expand"}</button>
                 { (this.state.expanded && this.state.comments.length > 0) ? 
-                        this.state.comments.map((comment, commentIndex) => (
-                            <div id={ "comment_" + commentIndex } style={ this.getCommentStyle(commentIndex, commentIndex+10) }>
-                                <pre style={{ flex : '1 auto', float: 'left', marginRight: '10px' }}>
+                        this.state.comments.map((comment, commentIndex) => {
+                            let dashStr = ">>";
+                            let dashStrRepeated = dashStr.repeat(commentIndex);
+                            return (
+                                <div key={ comment.id } style={ this.getCommentStyle(commentIndex) }> { dashStrRepeated } 
+                            <div>
+                                 
+                                <span style={{ flex : '1 auto', float: 'left', marginRight: '10px' }}>
                                     from: { comment.userFirstName } { comment.userLastName } <br />
                                     Location: Toronto
-                                </pre>
-                                <p style={{ flex: '8' }}> 
+                                </span>
+                                <span style={{ flex: '8' }}> 
                                     { comment.messageBody } 
-                                </p>
+                                </span>
                             </div>
-                            ))  : null}
+                            </div> 
+                            )})  : null}
             </div>
         )
     }
